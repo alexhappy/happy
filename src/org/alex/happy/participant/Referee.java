@@ -3,7 +3,7 @@ package org.alex.happy.participant;
 import org.alex.happy.game.Game;
 import org.alex.happy.template.Template;
 
-public interface Referee extends Runnable{
+public interface Referee{
 
 	public void rule(Game game);
 	public void shuffle();

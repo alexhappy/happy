@@ -26,4 +26,11 @@ public class SingleTemplate implements Template{
 		return type;
 	}
 
+	@Override
+	public List<Poker> getBigPokers(List<Poker> pokers) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
 }

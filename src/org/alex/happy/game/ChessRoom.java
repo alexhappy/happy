@@ -13,9 +13,9 @@ public class ChessRoom {
 	
 	public static void main(String[] args) throws Exception {
 		
-		Player player1 = new PrimaryPlayer();
-		Player player2 = new PrimaryPlayer();
-		Player player3 = new PrimaryPlayer();
+		Player player1 = new PrimaryPlayer("张三");
+		Player player2 = new PrimaryPlayer("李四");
+		Player player3 = new PrimaryPlayer("王五");
 		
 		List<Player> players = new ArrayList<Player>(3);
 		players.add(player1);
@@ -28,8 +28,13 @@ public class ChessRoom {
 		player2.play(game);
 		player3.play(game);
 		referee.rule(game);
+		
+		
 		referee.shuffle();
 		referee.distribute();
+		System.out.println(player1.getHandPokers().size()+"张牌： "+player1.getHandPokers());
+		System.out.println(player2.getHandPokers().size()+"张牌： "+player2.getHandPokers());
+		System.out.println(player3.getHandPokers().size()+"张牌： "+player3.getHandPokers());
 		referee.startGame();
 		System.out.println(player1.getHandPokers().size()+"张牌： "+player1.getHandPokers());
 		System.out.println(player2.getHandPokers().size()+"张牌： "+player2.getHandPokers());
@@ -38,7 +43,7 @@ public class ChessRoom {
 		
 //		referee.startGame();
 //		
-//		game.getWinner();
+		System.out.println(game.getWinner());
 		
 	}
 	

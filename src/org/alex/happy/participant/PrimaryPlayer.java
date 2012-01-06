@@ -4,24 +4,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Random;
-
 import org.alex.happy.domain.Poker;
 import org.alex.happy.game.Game;
 import org.alex.happy.template.SingleTemplate;
 import org.alex.happy.template.Template;
 
-public class PrimaryPlayer implements Player {
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
+public class PrimaryPlayer implements Player,Runnable{
 
 	private List<Poker> pokers=new LinkedList<Poker>();
 	private Game game ;
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+	private String name;
+	public PrimaryPlayer(String name){
+		this.name=name;
 	}
-
+	
 	@Override
 	public void play(Game game) {
 		this.game=game;
@@ -66,7 +64,10 @@ public class PrimaryPlayer implements Player {
 		List<Poker> out=new ArrayList<Poker>();
 		for(int i=pokers.size()-1;i>=0;i--){
 			Poker poker=pokers.get(i);
+			System.out.println("遍历"+poker);
+			
 			if(poker.bigger(before.get(0))){
+				System.out.println("找到大的"+poker);
 				pokers.remove(poker);
 				out.add(poker);
 				break;
@@ -82,21 +83,29 @@ public class PrimaryPlayer implements Player {
 		return sTemplate;
 	}
 	private Template getRandom(){
-		int n = pokers.size();
-		Random random = new Random();
-		int i = random.nextInt(n);
-		Poker poker = pokers.get(i);
-		pokers.remove(i);
-		
+		int n = pokers.size()-1;
+		Poker poker = pokers.get(n);
+		pokers.remove(n);
+		System.out.println("找到最小牌"+poker);
 		List<Poker> out=new ArrayList<Poker>(1);
 		out.add(poker);
-		Template sTemplate=new SingleTemplate(pokers);
-		System.out.println("#随意出牌"+out);
+		Template sTemplate=new SingleTemplate(out);
+		System.out.println("#出最小牌"+out);
 		return sTemplate;
 	}
 	@Override
 	public void run() {
 		
+	}
+
+	@Override
+	public String toString() {
+		return "PrimaryPlayer [name=" + name + "]";
+	}
+
+	@Override
+	public Template timeOutHandOut() {
+		return getRandom();
 	}
 
 }

@@ -3,6 +3,9 @@ package org.alex.happy.participant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.alex.happy.domain.APoker;
 import org.alex.happy.domain.Poker;
 import org.alex.happy.game.Game;
@@ -10,7 +13,7 @@ import org.alex.happy.template.Template;
 
 public class PrimaryReferee implements Referee{
 
-	
+	ExecutorService pool = Executors.newCachedThreadPool(); 
 	private Game ruleGame;
 	
 	
@@ -29,6 +32,8 @@ public class PrimaryReferee implements Referee{
 			System.out.println("轮到 "+i+" 号选手出牌");
 			Thread.sleep(1000);
 			Template outTemplate=turnPlayer(ruleGame.getPlayers().get(i),template);
+			if(outTemplate!=null)
+			System.out.println("实际出牌"+outTemplate.getPokers().get(0));
 			System.out.println("剩余手牌"+ruleGame.getPlayers().get(i).getHandPokers());
 			template=outTemplate;
 			i=(i+1)%ruleGame.getPlayerNum();
@@ -83,13 +88,10 @@ public class PrimaryReferee implements Referee{
 	}
 
 	@Override
-	public void run() {
-	}
-
-	@Override
 	public void overGame(Player player) {
 		ruleGame.setWinner(player);
 		ruleGame.setOver(true);
+		System.out.println("游戏结束");
 	}
 
 }

@@ -10,7 +10,7 @@ public interface Template {
 	public static final int TYPE_DOUBLE=1;
 	
 	
-	
+	public List<Poker> getBigPokers(List<Poker> pokers);
 	public List<Poker> getPokers();
 	public int getTemplateType();
 	
