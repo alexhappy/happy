@@ -2,12 +2,16 @@ package org.alex.happy.game;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+
 import org.alex.happy.domain.APoker;
 import org.alex.happy.participant.Player;
 import org.alex.happy.participant.Referee;
 
 public interface Game {
 
+	public Lock getWait();
+	public Lock getTurn();
 	
 	public Date getStartDate();
 	public void setStartDate(Date startDate);

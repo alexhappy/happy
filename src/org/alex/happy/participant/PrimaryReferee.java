@@ -26,21 +26,27 @@ public class PrimaryReferee implements Referee{
 	@Override
 	public void startGame() throws InterruptedException{
 		int i=0;
+		
+		ruleGame.getTurn().lock();
+		ruleGame.getWait().lock();
+		
 		Template template=null;
+//		List<Player> players = ruleGame.getPlayers();
+//		for(Player player:players){
+//			pool.execute(player);
+//		}
 		while(!ruleGame.isOver())
 		{
 			System.out.println("轮到 "+i+" 号选手出牌");
 			Thread.sleep(1000);
 			Template outTemplate=turnPlayer(ruleGame.getPlayers().get(i),template);
-			if(outTemplate!=null)
-			System.out.println("实际出牌"+outTemplate.getPokers().get(0));
 			System.out.println("剩余手牌"+ruleGame.getPlayers().get(i).getHandPokers());
+			if(outTemplate!=null)
 			template=outTemplate;
 			i=(i+1)%ruleGame.getPlayerNum();
 				
 		}
 	}
-	
 	@Override
 	public void shuffle() {
 		
@@ -93,5 +99,5 @@ public class PrimaryReferee implements Referee{
 		ruleGame.setOver(true);
 		System.out.println("游戏结束");
 	}
-
+	
 }

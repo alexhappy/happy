@@ -3,6 +3,9 @@ package org.alex.happy.game;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import org.alex.happy.domain.APoker;
 import org.alex.happy.participant.Player;
 import org.alex.happy.participant.Referee;
@@ -18,6 +21,9 @@ public class HappyGame implements Game{
 	private boolean over;
 	private List<Player> players;
 	private Referee referee;
+	private Lock waitLock=new ReentrantLock();
+	private Lock turnLock=new ReentrantLock();
+	
 	
 	
 	public HappyGame(List<Player> players,Referee referee) throws Exception{
@@ -97,6 +103,14 @@ public class HappyGame implements Game{
 	@Override
 	public Referee getReferee() {
 		return referee;
+	}
+	@Override
+	public Lock getWait() {
+		return waitLock;
+	}
+	@Override
+	public Lock getTurn() {
+		return turnLock;
 	}
 	
 	

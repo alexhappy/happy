@@ -5,7 +5,7 @@ import org.alex.happy.domain.Poker;
 import org.alex.happy.game.Game;
 import org.alex.happy.template.Template;
 
-public interface Player {
+public interface Player extends Runnable{
 	
 	public void play(Game game);
 	public List<Poker> getHandPokers();

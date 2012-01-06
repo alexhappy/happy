@@ -80,9 +80,6 @@ public class Poker implements Comparable<Poker>{
 		return "["+cstr + "," + num + "]";
 	}
 	public boolean bigger(Poker poker){
-		
-		System.out.println("#比较 this:"+this.getNumber()+" that"+poker.getNumber());
-		
 		if(this.getNumber()-poker.getNumber()>0){
 			return true;
 		}

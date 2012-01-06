@@ -9,9 +9,7 @@ import org.alex.happy.game.Game;
 import org.alex.happy.template.SingleTemplate;
 import org.alex.happy.template.Template;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
-
-public class PrimaryPlayer implements Player,Runnable{
+public class PrimaryPlayer implements Player{
 
 	private List<Poker> pokers=new LinkedList<Poker>();
 	private Game game ;
@@ -43,12 +41,20 @@ public class PrimaryPlayer implements Player,Runnable{
 
 	@Override
 	public Template handOut(Template template) {
+		
 		Template out=null;
 		if(template==null){
 			out=getRandom();
 		}else {
+			if(template.getOutPlayer()==this){
+				System.out.println("是我出的牌，没人能压住");
+				template=null;
+				out=getRandom();
+			}else {
+				
+				out=getBigger(template);
+			}
 			
-			out=getBigger(template);
 		}
 		if (out==null) {
 			System.out.println("*不出");
@@ -56,6 +62,8 @@ public class PrimaryPlayer implements Player,Runnable{
 		if (pokers.size()==0) {
 			game.getReferee().overGame(this);
 		}
+		if(out!=null)
+			out.setOutPlayer(this);
 		return out;
 		
 	}
@@ -64,10 +72,7 @@ public class PrimaryPlayer implements Player,Runnable{
 		List<Poker> out=new ArrayList<Poker>();
 		for(int i=pokers.size()-1;i>=0;i--){
 			Poker poker=pokers.get(i);
-			System.out.println("遍历"+poker);
-			
 			if(poker.bigger(before.get(0))){
-				System.out.println("找到大的"+poker);
 				pokers.remove(poker);
 				out.add(poker);
 				break;
